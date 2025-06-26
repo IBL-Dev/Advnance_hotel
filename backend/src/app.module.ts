@@ -5,6 +5,8 @@ import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
 import { RoomModule } from './rooms/room.module';
 import { BookingModule } from './booking/booking.module';
+import { ServiceModule } from './servises/servises.module';
+import { HotelInfoModule } from './hotelInfo/hotelInfo.module';
 @Module({
   imports: [
     MongooseModule.forRoot(
@@ -13,7 +15,9 @@ import { BookingModule } from './booking/booking.module';
     UserModule,
     AuthModule,
     RoomModule,
-    BookingModule
+    BookingModule,
+    ServiceModule,
+    HotelInfoModule
   ],
   controllers: [AppController],
 })
