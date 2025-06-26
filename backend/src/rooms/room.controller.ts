@@ -26,6 +26,7 @@ export class RoomController {
     return this.roomService.create(createRoomDto);
   }
 
+  //add validation
   @Patch(':id')
   @Roles('admin')
   update(@Param('id') id: string, @Body() updateRoomDto: UpdateRoomDto) {
