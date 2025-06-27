@@ -4,7 +4,7 @@ import { Model } from 'mongoose';
 import { User } from './user.entity';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import {generateUserId } from '../common/idgenarator/base';
+import {generateUserId } from '../common/idgenarator/useridgenarator';
 
 @Injectable()
 export class UserService {

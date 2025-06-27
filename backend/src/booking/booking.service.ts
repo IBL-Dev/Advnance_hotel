@@ -2,15 +2,17 @@ import { Injectable } from "@nestjs/common";
 import { Booking } from "./booking.entity";
 import { InjectModel } from "@nestjs/mongoose";
 import { Model } from "mongoose";
+import {generateBookingId} from "../common/idgenarator/booingidgenarator";
 
 @Injectable()
 export class BookingService {
 
 constructor(@InjectModel(Booking.name) private bookingModel: Model<Booking>) {}
 
-   create(bookingData: Partial<Booking>) {
-  const newBooking = new this.bookingModel(bookingData);
-  return newBooking.save();
+async create(bookingData: Partial<Booking>) {
+  const bookingId = await generateBookingId(this.bookingModel);
+  const booking = new this.bookingModel({ ...bookingData, bookingId });
+  return booking.save();
 }
 
     

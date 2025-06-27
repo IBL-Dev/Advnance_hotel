@@ -3,6 +3,9 @@ import {Document} from "mongoose";
 
 @Schema()
 export class Booking extends Document {
+
+  @Prop({ required: true, unique: true })
+  bookingId : string; // Unique booking identifier
   
   @Prop({ required: true })
   userId: string;
@@ -30,3 +33,5 @@ export class Booking extends Document {
 }
 
 export const BookingSchema = SchemaFactory.createForClass(Booking);
+
+BookingSchema.set('timestamps', true);
