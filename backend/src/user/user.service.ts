@@ -1,9 +1,10 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { User } from './entity/user.entity';
+import { User } from './user.entity';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import {generateUserId } from '../common/idgenarator/base';
 
 @Injectable()
 export class UserService {
@@ -17,12 +18,13 @@ export class UserService {
     return this.userModel.find().exec();
   }
 
-  async create(createUserDto: CreateUserDto) {
-    const user = new this.userModel(createUserDto);
-    const savedUser = await user.save();
-    this.logger.log(`Created user with email: ${savedUser.email}`);
-    return savedUser;
-  }
+ async create(createUserDto: CreateUserDto) {
+  const userId = await generateUserId(this.userModel);
+  const user = new this.userModel({ ...createUserDto, userId });
+  const savedUser = await user.save();
+  this.logger.log(`Created user with email: ${savedUser.email} and userId: ${userId}`);
+  return savedUser;
+}
 
   async update(updateUserDto: UpdateUserDto, userId: string) {
     const updatedUser = await this.userModel.findByIdAndUpdate(userId, updateUserDto, { new: true });
