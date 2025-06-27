@@ -8,10 +8,11 @@ export class BookingService {
 
 constructor(@InjectModel(Booking.name) private bookingModel: Model<Booking>) {}
 
-    create(booking: Booking) {
-        const newBooking = new this.bookingModel(booking);
-        return newBooking.save();
-    }
+   create(bookingData: Partial<Booking>) {
+  const newBooking = new this.bookingModel(bookingData);
+  return newBooking.save();
+}
+
     
     findAll() {
         return this.bookingModel.find().exec();

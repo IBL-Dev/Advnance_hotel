@@ -1,14 +1,17 @@
-import { Controller, Get, Post, Body, Param, Put, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Put, Delete, Request, UseGuards } from '@nestjs/common';
 import { BookingService } from './booking.service';
 import { Booking } from './booking.entity';
+import { JwtAuthGuard } from '../auth/jwt_auth.guard'; // create this file (next step)
 
+@UseGuards(JwtAuthGuard)
 @Controller('bookings')
 export class BookingController {
   constructor(private readonly bookingService: BookingService) {}
 
   @Post()
-  create(@Body() booking: Booking) {
-    return this.bookingService.create(booking);
+  create(@Body() booking: Booking, @Request() req: any) {
+    const userId = req.user.id;
+    return this.bookingService.create({ ...booking, userId });
   }
 
   @Get()
@@ -31,6 +34,3 @@ export class BookingController {
     return this.bookingService.delete(id);
   }
 }
-
-
-//fdfsdfdsfsdfsdfsdf
