@@ -16,7 +16,7 @@ const Herosection = () => {
               </p>
             </div>
 
-            <p className="text-gray-500 text-sm sm:text-base leading-relaxed max-w-md mt-4 sm:mt-6">
+            <p className="text-gray-500 text-sm sm:text-base leading-relaxed max-w-[30rem] mt-4 sm:mt-6">
               Lorem ipsum dolor sit amet, consectetur sed nonummy nibh euismod tincidunt dolore magna erat volutpat
               Lorem ipsum dolor sit amet, consectetur sed nonummy nibh euismod tincidunt dolore magna erat volutpat
               Lorem ipsum dolor sit amet, consectetur sed nonummy nibh euismod tincidunt dolore magna erat volutpat
