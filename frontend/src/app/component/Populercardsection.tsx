@@ -36,7 +36,7 @@ export function DirectionAwareHoverDemo() {
   ];
 
   return (
-    <div className="py-8 sm:py-12 lg:py-16 px-4 sm:px-8 lg:px-16 bg-gray-50">
+    <div className="py-8 sm:py-12 lg:py-16 px-4 sm:px-8 lg:px-16 bg-gray-500 ">
       {/* Header Section */}
       <div className="text-center mb-8 sm:mb-10 lg:mb-12">
         <h2 className="text-3xl sm:text-4xl lg:text-6xl font-bold text-teal-400 mb-2 tracking-wide">
@@ -48,7 +48,7 @@ export function DirectionAwareHoverDemo() {
       </div>
 
       {/* Cards Container */}
-      <div className="relative overflow-hidden">
+      <div className="relative overflow-hidden ">
         <div className="flex gap-4 sm:gap-6 lg:gap-8 animate-scroll">
           {/* First set of cards */}
           {cards.map((card, index) => (
