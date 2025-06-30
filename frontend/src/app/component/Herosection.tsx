@@ -2,7 +2,7 @@ import React from 'react';
 
 const Herosection = () => {
   return (
-    <section className="py-8 sm:py-12 lg:py-16  sm:px-8  bg-gray-50">
+    <section className="py-8 sm:py-12 lg:py-16  sm:px-8  bg-white">
       <div className="max-w-7xl mx-auto w-full">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Left Content */}
@@ -18,10 +18,12 @@ const Herosection = () => {
 
             <p className="text-gray-500 text-base leading-relaxed max-w-md mt-6">
               Lorem ipsum dolor sit amet, consectetur sed nonummy nibh euismod tincidunt dolore magna erat volutpat
+              Lorem ipsum dolor sit amet, consectetur sed nonummy nibh euismod tincidunt dolore magna erat volutpat
+              Lorem ipsum dolor sit amet, consectetur sed nonummy nibh euismod tincidunt dolore magna erat volutpat
             </p>
 
-            <div className="pt-4">
-              <button className="bg-teal-600 hover:bg-teal-700 text-white px-8 py-3 rounded-lg text-base font-semibold shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
+            <div className="pt-8">
+              <button className="bg-teal-600 hover:bg-teal-700 text-white px-6 py-3 rounded-lg text-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
                 Book your Room
               </button>
             </div>

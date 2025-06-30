@@ -36,7 +36,7 @@ export function DirectionAwareHoverDemo() {
   ];
 
   return (
-    <div className="py-8 sm:py-12 lg:py-16 px-4 sm:px-8 lg:px-16 bg-gray-500 ">
+    <div className="py-8 sm:py-12 lg:py-16 px-4 sm:px-8 lg:px-16  ">
       {/* Header Section */}
       <div className="text-center mb-8 sm:mb-10 lg:mb-12">
         <h2 className="text-3xl sm:text-4xl lg:text-6xl font-bold text-teal-400 mb-2 tracking-wide">
@@ -52,7 +52,7 @@ export function DirectionAwareHoverDemo() {
         <div className="flex gap-4 sm:gap-6 lg:gap-8 animate-scroll">
           {/* First set of cards */}
           {cards.map((card, index) => (
-            <div key={index} className="flex-shrink-0 w-64 sm:w-72 lg:w-80">
+            <div key={index} className="flex-shrink-0  sm:w-72 lg:w-80">
               <div className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
                 <DirectionAwareHover imageUrl={card.imageUrl}>
                   <p className="font-bold text-lg sm:text-xl text-white">{card.title}</p>

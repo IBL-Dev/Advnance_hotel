@@ -24,9 +24,9 @@ const Navbar: React.FC<NavbarProps> = () => {
   };
 
   return (
-    <nav className="bg-white border-gray-100 sticky top-0 z-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16">
+    <nav className="bg-white  border-gray-100 sticky top-0 z-50 py-4 max-w-6xl">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-between items-center h-16  max-w-6xl">
           {/* Hotel Logo */}
           <div className="flex items-center space-x-3">
             <div className="bg-gradient-to-r from-teal-500 to-teal-600 p-2.5 rounded-xl shadow-lg">
