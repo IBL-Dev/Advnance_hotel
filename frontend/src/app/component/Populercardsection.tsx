@@ -36,7 +36,7 @@ export function DirectionAwareHoverDemo() {
   ];
 
   return (
-    <div className="py-8 sm:py-12 lg:py-16 px-4 sm:px-8 lg:px-16  ">
+    <div className="py-8 ">
       {/* Header Section */}
       <div className="text-center mb-8 sm:mb-10 lg:mb-12">
         <h2 className="text-3xl sm:text-4xl lg:text-6xl font-bold text-teal-400 mb-2 tracking-wide">
