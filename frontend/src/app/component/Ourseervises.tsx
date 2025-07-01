@@ -98,6 +98,21 @@ const Ourservices = () => {
       const isInSection = rect.top <= 0 && rect.bottom >= window.innerHeight;
 
       if (isInSection) {
+        // Only prevent default if we're not at the boundaries
+        const isAtFirstService = activeService === 0;
+        const isAtLastService = activeService === services.length - 1;
+        
+        // Allow scrolling up to previous section when at first service
+        if (isAtFirstService && e.deltaY < 0) {
+          return; // Let the main page handle this scroll
+        }
+        
+        // Allow scrolling down to next section when at last service  
+        if (isAtLastService && e.deltaY > 0) {
+          return; // Let the main page handle this scroll
+        }
+
+        // Handle internal service navigation
         e.preventDefault();
         
         const now = Date.now();
@@ -133,7 +148,7 @@ const Ourservices = () => {
       window.removeEventListener('wheel', handleWheel);
       clearTimeout(scrollTimeoutRef.current);
     };
-  }, [services.length]);
+  }, [services.length, activeService]);
 
   const currentService = services[activeService];
 
@@ -152,6 +167,7 @@ const Ourservices = () => {
   return (
     <section 
       ref={sectionRef}
+      data-services-container
       className="h-screen overflow-hidden bg-gradient-to-br from-gray-50 to-gray-100 flex flex-col"
     >
       <div className="max-w-7xl mx-auto flex-1 flex flex-col px-4">

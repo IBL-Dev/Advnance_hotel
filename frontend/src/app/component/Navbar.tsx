@@ -97,7 +97,7 @@ const Navbar: React.FC<NavbarProps> = ({ activeSection = "home", onNavigate }) =
   };
 
   return (
-    <nav className="bg-white border-gray-100 sticky top-0 z-50 py-3 w-full shadow-sm">
+    <nav className="bg-white border-gray-100 sticky top-0 z-50 py-3 w-full shadow-sm ">
       <div className="max-w-7xl mx-auto">
         <div className="flex justify-between items-center h-12">
           {/* Hotel Logo */}
