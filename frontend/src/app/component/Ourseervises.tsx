@@ -90,6 +90,26 @@ const Ourservices = () => {
     }
   ];
 
+  const [showSideNav, setShowSideNav] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (!sectionRef.current) return;
+
+      const rect = sectionRef.current.getBoundingClientRect();
+      const isInSection = rect.top <= 100 && rect.bottom >= 100;
+      
+      setShowSideNav(isInSection);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    handleScroll(); // Check initial state
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
   useEffect(() => {
     const handleWheel = (e) => {
       if (!sectionRef.current) return;
@@ -170,16 +190,52 @@ const Ourservices = () => {
       data-services-container
       className="h-screen overflow-hidden bg-gradient-to-br from-gray-50 to-gray-100 flex flex-col"
     >
-      <div className="max-w-7xl mx-auto flex-1 flex flex-col px-4">
-        {/* Header */}
-        
-        {/* Main Content - Fixed Height */}
-        <div className="flex-1 flex flex-col justify-center">
-          {/* Top Section - Features and Gallery in same line */}
-          <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-start mb-12">
+      <div className="max-w-7xl mx-auto flex-1 flex flex-col px-4 py-8">
+        {/* Main Content - Properly centered with consistent spacing */}
+        <div className="flex-1 flex flex-col justify-center space-y-8">
+          
+          {/* Top Section - Service Header and Main Image */}
+          <div 
+            key={currentService.id}
+            className={`grid lg:grid-cols-2 gap-8 lg:gap-12 items-center transition-all duration-700 transform ${
+              isScrolling ? 'scale-95 opacity-80' : 'scale-100 opacity-100'
+            }`}
+          >
+            {/* Left Content - Main Image */}
+            <div className="order-2 lg:order-1" data-aos="fade-right" data-aos-duration="1000" data-aos-delay="200">
+              <div className="relative bg-white rounded-2xl shadow-xl overflow-hidden group">
+                <img 
+                  src={currentService.mainImage}
+                  alt={currentService.title}
+                  className="w-full h-64 md:h-80 object-cover transition-all duration-700 transform group-hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+              </div>
+            </div>
+
+            {/* Right Content - Service Details */}
+            <div className="order-1 lg:order-2 space-y-6">
+              <div className="flex items-center gap-4" data-aos="fade-left" data-aos-duration="800" data-aos-delay="100">
+                <div className="w-12 h-12 bg-teal-100 rounded-full flex items-center justify-center text-teal-600 flex-shrink-0">
+                  {currentService.icon}
+                </div>
+                <h3 className="text-3xl md:text-4xl font-bold text-gray-800">
+                  {currentService.title}
+                </h3>
+              </div>
+              
+              <p className="text-gray-700 leading-relaxed text-lg animate-fadeIn" data-aos="fade-up" data-aos-duration="900" data-aos-delay="300">
+                {currentService.description}
+              </p>
+            </div>
+          </div>
+          
+          {/* Bottom Section - Features and Gallery properly aligned */}
+          <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-start">
+            
             {/* Left Side - Features List */}
-            <div className="space-y-6">
-              <h4 className="text-lg md:text-xl font-bold text-gray-800 mb-4">
+            <div className="space-y-4" data-aos="fade-right" data-aos-duration="800" data-aos-delay="400">
+              <h4 className="text-lg md:text-xl font-bold text-gray-800" data-aos="slide-down" data-aos-duration="600" data-aos-delay="500">
                 What We Offer
               </h4>
 
@@ -188,12 +244,15 @@ const Ourservices = () => {
                   <div 
                     key={`${currentService.id}-feature-${index}`}
                     className="flex items-start gap-4 p-4 bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-300 transform hover:-translate-y-1"
+                    data-aos="zoom-in-right"
+                    data-aos-duration="700"
+                    data-aos-delay={600 + (index * 150)}
                     style={{ animationDelay: `${index * 10}ms` }}
                   >
-                    <div className="flex-shrink-0 w-5 h-5 bg-gradient-to-r from-teal-400 to-teal-600 rounded-full flex items-center justify-center">
-                      <span className="text-white font-bold text-sm">{index + 1}</span>
+                    <div className="flex-shrink-0 w-6 h-6 bg-gradient-to-r from-teal-400 to-teal-600 rounded-full flex items-center justify-center">
+                      <span className="text-white font-bold text-xs">{index + 1}</span>
                     </div>
-                    <p className="text-gray-700 font-medium text-sm">
+                    <p className="text-gray-700 font-medium text-sm leading-relaxed">
                       {feature}
                     </p>
                   </div>
@@ -202,80 +261,58 @@ const Ourservices = () => {
             </div>
 
             {/* Right Side - Image Gallery */}
-            <div className="grid grid-cols-2 gap-3">
-              {currentService.galleryImages.map((image, index) => (
-                <div 
-                  key={`${currentService.id}-gallery-${index}`}
-                  className="bg-white rounded-2xl shadow-lg overflow-hidden group"
-                  style={{ animationDelay: `${index * 80}ms` }}
-                >
-                  <img 
-                    src={image}
-                    alt={`${currentService.title} ${index + 1}`}
-                    className="w-full h-16 md:h-35 object-cover hover:scale-100 transition-all duration-500 cursor-pointer"
-                  />
-                </div>
-              ))}
+            <div data-aos="fade-left" data-aos-duration="800" data-aos-delay="500">
+              <h4 className="text-lg md:text-xl font-bold text-gray-800 mb-4" data-aos="slide-down" data-aos-duration="600" data-aos-delay="600">
+                Gallery
+              </h4>
+              <div className="grid grid-cols-2 gap-3">
+                {currentService.galleryImages.map((image, index) => (
+                  <div 
+                    key={`${currentService.id}-gallery-${index}`}
+                    className="bg-white rounded-xl shadow-lg overflow-hidden group"
+                    data-aos="flip-left"
+                    data-aos-duration="800"
+                    data-aos-delay={700 + (index * 100)}
+                    style={{ animationDelay: `${index * 80}ms` }}
+                  >
+                    <img 
+                      src={image}
+                      alt={`${currentService.title} ${index + 1}`}
+                      className="w-full h-24 md:h-32 object-cover hover:scale-105 transition-all duration-500 cursor-pointer"
+                    />
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
 
-          {/* Bottom Section - Service Details */}
-          <div 
-            key={currentService.id}
-            className={`grid lg:grid-cols-2 gap-8 lg:gap-12 items-center transition-all duration-700 transform ${
-              isScrolling ? 'scale-95 opacity-80' : 'scale-100 opacity-100'
-            }`}
-          >
-            {/* Left Content - Main Image */}
-            <div className="order-2 lg:order-1">
-              <div className="relative bg-white rounded-2xl shadow-xl overflow-hidden group">
-                <img 
-                  src={currentService.mainImage}
-                  alt={currentService.title}
-                  className="w-full h-48 md:h-64 object-cover transition-all duration-700 transform group-hover:scale-105"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-              </div>
-            </div>
+        </div>
+      </div>
 
-            {/* Right Content - Service Details */}
-            <div className="order-1 lg:order-2 space-y-6">
-              <div className="flex items-center gap-4 mb-6">
-                <div className="w-12 h-12 bg-teal-100 rounded-full flex items-center justify-center text-teal-600">
-                  {currentService.icon}
-                </div>
-                <h3 className="text-3xl md:text-4xl font-bold text-gray-800">
-                  {currentService.title}
-                </h3>
-              </div>
-              
-              <p className="text-gray-700 leading-relaxed text-lg animate-fadeIn">
-                {currentService.description}
-              </p>
-            </div>
+      {/* Side Navigation - Only show when in services section */}
+      {showSideNav && (
+        <div className="fixed right-6 top-1/2 transform -translate-y-1/2 z-10" data-aos="fade-left" data-aos-duration="1000" data-aos-delay="1200">
+          <div className="flex flex-col space-y-3">
+            {services.map((service, index) => (
+              <button
+                key={index}
+                onClick={() => handleServiceClick(index)}
+                className={`w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 ${
+                  activeService === index 
+                    ? 'bg-teal-500 text-white shadow-lg scale-110' 
+                    : 'bg-white text-teal-500 shadow-md hover:bg-teal-50'
+                }`}
+                title={service.title}
+                data-aos="zoom-in"
+                data-aos-duration="600"
+                data-aos-delay={1300 + (index * 100)}
+              >
+                {service.icon}
+              </button>
+            ))}
           </div>
         </div>
-      </div>
-
-      {/* Side Navigation */}
-      <div className="fixed right-6 top-1/2 transform -translate-y-1/2 z-10">
-        <div className="flex flex-col space-y-3">
-          {services.map((service, index) => (
-            <button
-              key={index}
-              onClick={() => handleServiceClick(index)}
-              className={`w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 ${
-                activeService === index 
-                  ? 'bg-teal-500 text-white shadow-lg scale-110' 
-                  : 'bg-white text-teal-500 shadow-md hover:bg-teal-50'
-              }`}
-              title={service.title}
-            >
-              {service.icon}
-            </button>
-          ))}
-        </div>
-      </div>
+      )}
 
       <style jsx>{`
         @keyframes fadeIn {
