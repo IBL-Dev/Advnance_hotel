@@ -1,5 +1,6 @@
 import Herosection from "./component/Herosection";
 import Navbar from "./component/Navbar";
+import Ourservices from "./component/Ourseervises";
 import PopulerSection from "./component/populersection";
 
 export default function Home() {
@@ -8,6 +9,7 @@ export default function Home() {
      <Navbar/>
      <Herosection/>
      <PopulerSection/>
+     <Ourservices/>
     </>
   );
 }
