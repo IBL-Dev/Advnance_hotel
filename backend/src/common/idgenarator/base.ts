@@ -1,10 +1,9 @@
 // src/common/id-generator/base.ts
-import { Model } from 'mongoose';
-import { Document } from 'mongoose';
+import { Model, Document } from 'mongoose';
 
-export async function generateStructuredId(
+export async function generateStructuredId<T extends Document>(
   prefix: string,
-  model: Model<Document>,
+  model: Model<T>,
 ): Promise<string> {
   const now = new Date();
   const year = String(now.getFullYear()).slice(-2);

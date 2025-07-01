@@ -156,20 +156,57 @@ const Ourservices = () => {
     >
       <div className="max-w-7xl mx-auto flex-1 flex flex-col px-4">
         {/* Header */}
-        <div className="text-center py-8">
-          <h2 className="text-4xl md:text-5xl font-bold text-teal-500 mb-4">
-            Our Services
-          </h2>
-          <p className="text-gray-600 text-lg max-w-md mx-auto">
-            Discover our comprehensive range of design and consultation services
-          </p>
-        </div>
-
+        
         {/* Main Content - Fixed Height */}
         <div className="flex-1 flex flex-col justify-center">
+          {/* Top Section - Features and Gallery in same line */}
+          <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-start mb-12">
+            {/* Left Side - Features List */}
+            <div className="space-y-6">
+              <h4 className="text-lg md:text-xl font-bold text-gray-800 mb-4">
+                What We Offer
+              </h4>
+
+              <div className="space-y-3">
+                {currentService.features.map((feature, index) => (
+                  <div 
+                    key={`${currentService.id}-feature-${index}`}
+                    className="flex items-start gap-4 p-4 bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-300 transform hover:-translate-y-1"
+                    style={{ animationDelay: `${index * 10}ms` }}
+                  >
+                    <div className="flex-shrink-0 w-5 h-5 bg-gradient-to-r from-teal-400 to-teal-600 rounded-full flex items-center justify-center">
+                      <span className="text-white font-bold text-sm">{index + 1}</span>
+                    </div>
+                    <p className="text-gray-700 font-medium text-sm">
+                      {feature}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Right Side - Image Gallery */}
+            <div className="grid grid-cols-2 gap-3">
+              {currentService.galleryImages.map((image, index) => (
+                <div 
+                  key={`${currentService.id}-gallery-${index}`}
+                  className="bg-white rounded-2xl shadow-lg overflow-hidden group"
+                  style={{ animationDelay: `${index * 80}ms` }}
+                >
+                  <img 
+                    src={image}
+                    alt={`${currentService.title} ${index + 1}`}
+                    className="w-full h-16 md:h-35 object-cover hover:scale-100 transition-all duration-500 cursor-pointer"
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Bottom Section - Service Details */}
           <div 
             key={currentService.id}
-            className={`grid lg:grid-cols-2 gap-12 lg:gap-16 items-center transition-all duration-700 transform ${
+            className={`grid lg:grid-cols-2 gap-8 lg:gap-12 items-center transition-all duration-700 transform ${
               isScrolling ? 'scale-95 opacity-80' : 'scale-100 opacity-100'
             }`}
           >
@@ -179,7 +216,7 @@ const Ourservices = () => {
                 <img 
                   src={currentService.mainImage}
                   alt={currentService.title}
-                  className="w-full h-64 md:h-80 object-cover transition-all duration-700 transform group-hover:scale-105"
+                  className="w-full h-48 md:h-64 object-cover transition-all duration-700 transform group-hover:scale-105"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
               </div>
@@ -199,97 +236,7 @@ const Ourservices = () => {
               <p className="text-gray-700 leading-relaxed text-lg animate-fadeIn">
                 {currentService.description}
               </p>
-
-              <div className="flex gap-4 mt-8">
-                <button
-                  onClick={handlePrevious}
-                  disabled={activeService === 0}
-                  className={`p-3 rounded-full transition-colors shadow-lg ${
-                    activeService === 0 
-                      ? 'bg-gray-300 text-gray-500 cursor-not-allowed' 
-                      : 'bg-teal-500 text-white hover:bg-teal-600'
-                  }`}
-                >
-                  <ChevronLeft className="w-5 h-5" />
-                </button>
-                <button
-                  onClick={handleNext}
-                  disabled={activeService === services.length - 1}
-                  className={`p-3 rounded-full transition-colors shadow-lg ${
-                    activeService === services.length - 1 
-                      ? 'bg-gray-300 text-gray-500 cursor-not-allowed' 
-                      : 'bg-teal-500 text-white hover:bg-teal-600'
-                  }`}
-                >
-                  <ChevronRight className="w-5 h-5" />
-                </button>
-              </div>
             </div>
-          </div>
-
-          {/* Bottom Section - Features and Gallery */}
-          <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-start mt-12">
-            {/* Left Side - Features List */}
-            <div className="space-y-6">
-              <h4 className="text-2xl md:text-3xl font-bold text-gray-800 mb-4">
-                What We Offer
-              </h4>
-
-              <div className="space-y-3">
-                {currentService.features.map((feature, index) => (
-                  <div 
-                    key={`${currentService.id}-feature-${index}`}
-                    className="flex items-start gap-4 p-4 bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-300 transform hover:-translate-y-1"
-                    style={{ animationDelay: `${index * 100}ms` }}
-                  >
-                    <div className="flex-shrink-0 w-8 h-8 bg-gradient-to-r from-teal-400 to-teal-600 rounded-full flex items-center justify-center">
-                      <span className="text-white font-bold text-sm">{index + 1}</span>
-                    </div>
-                    <p className="text-gray-700 font-medium text-sm">
-                      {feature}
-                    </p>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Right Side - Image Gallery */}
-            <div className="grid grid-cols-2 gap-4">
-              {currentService.galleryImages.map((image, index) => (
-                <div 
-                  key={`${currentService.id}-gallery-${index}`}
-                  className="bg-white rounded-2xl shadow-lg overflow-hidden group"
-                  style={{ animationDelay: `${index * 150}ms` }}
-                >
-                  <img 
-                    src={image}
-                    alt={`${currentService.title} ${index + 1}`}
-                    className="w-full h-32 md:h-40 object-cover hover:scale-110 transition-all duration-500 cursor-pointer"
-                  />
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-
-        {/* Bottom Navigation */}
-        <div className="py-6">
-          {/* Progress Indicator */}
-          <div className="flex justify-center mb-4 space-x-2">
-            {services.map((_, index) => (
-              <button
-                key={index}
-                onClick={() => handleServiceClick(index)}
-                className={`w-3 h-3 rounded-full transition-all duration-300 ${
-                  activeService === index ? 'bg-teal-500 w-8' : 'bg-gray-300'
-                }`}
-              />
-            ))}
-          </div>
-
-          {/* Service Counter */}
-          <div className="text-center text-gray-500 text-sm">
-            {activeService + 1} of {services.length}
           </div>
         </div>
       </div>
@@ -311,13 +258,6 @@ const Ourservices = () => {
               {service.icon}
             </button>
           ))}
-        </div>
-      </div>
-
-      {/* Scroll Hint */}
-      <div className="fixed bottom-6 left-1/2 transform -translate-x-1/2 text-center">
-        <div className="bg-white/80 backdrop-blur-sm rounded-full px-4 py-2 text-sm text-gray-600 shadow-lg">
-          Scroll to navigate • {activeService + 1}/{services.length}
         </div>
       </div>
 

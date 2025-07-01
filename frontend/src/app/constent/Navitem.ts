@@ -4,6 +4,7 @@ export interface NavItem {
   id: number;
   name: string;
   href: string;
+  sectionName: string;
   active: boolean;
 }
 
@@ -23,42 +24,48 @@ export interface BrandInfo {
   logo: string;
 }
 
-export const navItems: NavItem[] = [
+export const createNavItems = (activeSection: string): NavItem[] => [
   {
     id: 1,
     name: "Home",
-    href: "#",
-    active: true
+    href: "#home",
+    sectionName: "home",
+    active: activeSection === "home"
   },
   {
     id: 2,
-    name: "Rooms & Suites",
-    href: "#",
-    active: false
+    name: "Places",
+    href: "#places",
+    sectionName: "places", 
+    active: activeSection === "places"
   },
   {
     id: 3,
-    name: "Amenities",
-    href: "#",
-    active: false
+    name: "Services",
+    href: "#services",
+    sectionName: "services",
+    active: activeSection === "services"
   },
   {
     id: 4,
     name: "Dining",
-    href: "#",
-    active: false
+    href: "#dining",
+    sectionName: "dining",
+    active: activeSection === "dining"
   },
   {
     id: 5,
     name: "Events",
-    href: "#",
-    active: false
+    href: "#events", 
+    sectionName: "events",
+    active: activeSection === "events"
   },
   {
     id: 6,
     name: "Contact",
-    href: "#",
-    active: false
+    href: "#contact",
+    sectionName: "contact",
+    active: activeSection === "contact"
   }
 ];
 
@@ -78,3 +85,6 @@ export const brandInfo: BrandInfo = {
   tagline: "Premium Hotels",
   logo: "Home" // This refers to the Lucide icon name
 };
+
+export const availableSections = ["home", "places", "services"] as const;
+export type SectionName = typeof availableSections[number];

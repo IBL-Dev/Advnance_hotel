@@ -2,31 +2,104 @@
 
 import React, { useState } from 'react';
 import { Home, Menu, X } from 'lucide-react';
-import { navItems, authButtons, brandInfo,NavItem } from '../constent/Navitem';
 
-interface NavbarProps {}
+interface NavItem {
+  id: number;
+  name: string;
+  href: string;
+  sectionName: string;
+  active: boolean;
+}
 
-const Navbar: React.FC<NavbarProps> = () => {
+interface NavbarProps {
+  activeSection?: string;
+  onNavigate?: (sectionName: string) => void;
+}
+
+const Navbar: React.FC<NavbarProps> = ({ activeSection = "home", onNavigate }) => {
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
+
+  // Updated nav items with section mapping
+  const navItems: NavItem[] = [
+    {
+      id: 1,
+      name: "Home",
+      href: "#home",
+      sectionName: "home",
+      active: activeSection === "home"
+    },
+    {
+      id: 2,
+      name: "Places",
+      href: "#places", 
+      sectionName: "places",
+      active: activeSection === "places"
+    },
+    {
+      id: 3,
+      name: "Services",
+      href: "#services",
+      sectionName: "services", 
+      active: activeSection === "services"
+    },
+    {
+      id: 4,
+      name: "Dining",
+      href: "#dining",
+      sectionName: "dining",
+      active: activeSection === "dining"
+    },
+    {
+      id: 5,
+      name: "Events",
+      href: "#events",
+      sectionName: "events",
+      active: activeSection === "events"
+    },
+    {
+      id: 6,
+      name: "Contact",
+      href: "#contact",
+      sectionName: "contact",
+      active: activeSection === "contact"
+    }
+  ];
+
+  const authButtons = {
+    login: {
+      text: "Login",
+      type: "secondary"
+    },
+    signup: {
+      text: "Sign Up", 
+      type: "primary"
+    }
+  };
+
+  const brandInfo = {
+    name: "LuxeStay",
+    tagline: "Premium Hotels"
+  };
 
   const toggleMenu = (): void => {
     setIsMenuOpen(!isMenuOpen);
   };
 
   const handleNavClick = (item: NavItem): void => {
-    // Handle navigation logic here
-    console.log(`Navigating to ${item.name}`);
+    if (onNavigate) {
+      onNavigate(item.sectionName);
+    }
+    setIsMenuOpen(false); // Close mobile menu after navigation
   };
 
   const handleAuthClick = (authType: 'login' | 'signup'): void => {
-    // Handle authentication logic here
     console.log(`${authType} clicked`);
   };
 
   return (
-    <nav className="bg-white border-gray-100 sticky top-0 z-50 py-4 w-full">
+    <nav className="bg-white border-gray-100 sticky top-0 z-50 py-3 w-full shadow-sm">
       <div className="max-w-7xl mx-auto">
-        <div className="flex justify-between items-center h-16">
+        <div className="flex justify-between items-center h-12">
           {/* Hotel Logo */}
           <div className="flex items-center space-x-3">
             <div className="bg-gradient-to-r from-teal-500 to-teal-600 p-2.5 rounded-xl shadow-lg">
@@ -42,9 +115,8 @@ const Navbar: React.FC<NavbarProps> = () => {
           <div className="hidden lg:block">
             <div className="flex items-center space-x-1">
               {navItems.map((item: NavItem) => (
-                <a
+                <button
                   key={item.id}
-                  href={item.href}
                   onClick={() => handleNavClick(item)}
                   className={`${
                     item.active
@@ -52,10 +124,10 @@ const Navbar: React.FC<NavbarProps> = () => {
                       : "text-gray-700 hover:text-teal-600 hover:bg-gray-50"
                   } px-4 py-2.5 rounded-lg text-sm font-${
                     item.active ? "semibold" : "medium"
-                  } transition-all duration-200 cursor-pointer`}
+                  } transition-all duration-200 cursor-pointer border-none bg-transparent`}
                 >
                   {item.name}
-                </a>
+                </button>
               ))}
             </div>
           </div>
@@ -103,9 +175,8 @@ const Navbar: React.FC<NavbarProps> = () => {
         <div className="lg:hidden">
           <div className="px-4 pt-2 pb-3 space-y-1 bg-white border-t border-gray-200 shadow-lg">
             {navItems.map((item: NavItem) => (
-              <a
+              <button
                 key={item.id}
-                href={item.href}
                 onClick={() => handleNavClick(item)}
                 className={`${
                   item.active
@@ -113,10 +184,10 @@ const Navbar: React.FC<NavbarProps> = () => {
                     : "text-gray-700 hover:text-teal-600 hover:bg-gray-50"
                 } block px-4 py-3 rounded-lg text-base font-${
                   item.active ? "semibold" : "medium"
-                } transition-colors duration-200 cursor-pointer`}
+                } transition-colors duration-200 cursor-pointer w-full text-left border-none bg-transparent`}
               >
                 {item.name}
-              </a>
+              </button>
             ))}
             <div className="pt-4 pb-3 border-t border-gray-200 mt-4">
               <div className="flex flex-col space-y-3 px-2">
