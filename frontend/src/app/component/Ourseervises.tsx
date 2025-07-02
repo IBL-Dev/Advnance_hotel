@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from 'react';
-import { Star, Award, Palette, Zap, ChevronLeft, ChevronRight } from 'lucide-react';
+import { CalendarCheck, Brush, CalendarDays, MapPin } from 'lucide-react';
 
 const Ourservices = () => {
   const [activeService, setActiveService] = useState(0);
@@ -10,82 +10,82 @@ const Ourservices = () => {
   const scrollTimeoutRef = useRef(null);
   const lastScrollTime = useRef(0);
 
-  // Dummy data for 4 services
+  // Services data with corrected hotel images
   const services = [
     {
       id: 0,
-      title: "Interior Design",
-      icon: <Palette className="w-6 h-6" />,
-      description: "Transform your space with our expert interior design services. We create beautiful, functional environments that reflect your personal style and enhance your daily living experience.",
-      mainImage: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=600&h=400&fit=crop",
+      title: "Room Booking",
+      icon: <CalendarCheck className="w-6 h-6" />,
+      description: "Streamlined room booking experience with real-time availability, instant confirmation, and personalized room selection.",
+      mainImage: "https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=600&h=400&fit=crop&q=80",
       features: [
-        "Custom space planning and layout design",
-        "Color consultation and material selection", 
-        "Furniture selection and procurement",
-        "Lighting design and installation coordination"
+        "Real-time room availability and reservation",
+        "Secure online payment integration",
+        "Flexible check-in and check-out options",
+        "Booking history and guest preferences tracking"
       ],
       galleryImages: [
-        "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=300&h=200&fit=crop",
-        "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?w=300&h=200&fit=crop",
-        "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?w=300&h=200&fit=crop",
-        "https://images.unsplash.com/photo-1600607687644-c7171b42498b?w=300&h=200&fit=crop"
+        "https://images.unsplash.com/photo-1566665797739-1674de7a421a?w=300&h=200&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1564501049412-61c2a3083791?w=300&h=200&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=300&h=200&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=300&h=200&fit=crop&q=80"
       ]
     },
     {
       id: 1,
-      title: "Architecture Design",
-      icon: <Star className="w-6 h-6" />,
-      description: "Innovative architectural solutions that blend functionality with aesthetic appeal. From residential homes to commercial buildings, we design structures that inspire and endure.",
-      mainImage: "https://images.unsplash.com/photo-1545558014-8692077e9b5c?w=600&h=400&fit=crop",
+      title: "Housekeeping Services",
+      icon: <Brush className="w-6 h-6" />,
+      description: "Maintain the highest standards of cleanliness and comfort with professional housekeeping and room maintenance.",
+      mainImage: "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?w=600&h=400&fit=crop&q=80",
       features: [
-        "Conceptual design and 3D visualization",
-        "Structural engineering consultation",
-        "Building permits and code compliance",
-        "Construction administration and oversight"
+        "Daily room cleaning and linen replacement",
+        "Scheduled deep cleaning services",
+        "Guest laundry and dry-cleaning coordination",
+        "Maintenance request handling and tracking"
       ],
       galleryImages: [
-        "https://images.unsplash.com/photo-1545558014-8692077e9b5c?w=300&h=200&fit=crop",
-        "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=300&h=200&fit=crop",
-        "https://images.unsplash.com/photo-1600573472592-401b489a3cdc?w=300&h=200&fit=crop",
-        "https://images.unsplash.com/photo-1600566752355-35792bedcfea?w=300&h=200&fit=crop"
+        "https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=300&h=200&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=300&h=200&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1560347876-aeef00ee58a1?w=300&h=200&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?w=300&h=200&fit=crop&q=80"
       ]
     },
     {
       id: 2,
-      title: "Project Management",
-      icon: <Award className="w-6 h-6" />,
-      description: "Comprehensive project management services ensuring your vision becomes reality on time and within budget. We coordinate every aspect from conception to completion.",
-      mainImage: "https://images.unsplash.com/photo-1497366216548-37526070297c?w=600&h=400&fit=crop",
+      title: "Event & Banquet Management",
+      icon: <CalendarDays className="w-6 h-6" />,
+      description: "Host unforgettable events with our complete event and banquet management services tailored to your vision.",
+      mainImage: "https://images.unsplash.com/photo-1519167758481-83f29b1fe9ce?w=600&h=400&fit=crop&q=80",
       features: [
-        "Timeline development and milestone tracking",
-        "Budget management and cost control",
-        "Vendor coordination and quality assurance",
-        "Risk management and problem resolution"
+        "Venue booking and setup coordination",
+        "Menu planning and catering services",
+        "Audio-visual equipment and tech support",
+        "Guest list and RSVP management"
       ],
       galleryImages: [
-        "https://images.unsplash.com/photo-1497366216548-37526070297c?w=300&h=200&fit=crop",
-        "https://images.unsplash.com/photo-1600566753051-e7d0ce2d2b8d?w=300&h=200&fit=crop",
-        "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=300&h=200&fit=crop",
-        "https://images.unsplash.com/photo-1600573472550-8090b5e0745e?w=300&h=200&fit=crop"
+        "https://images.unsplash.com/photo-1464207687429-7505649dae38?w=300&h=200&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?w=300&h=200&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=300&h=200&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?w=300&h=200&fit=crop&q=80"
       ]
     },
     {
       id: 3,
-      title: "Consultation Services",  
-      icon: <Zap className="w-6 h-6" />,
-      description: "Expert consultation to guide your design decisions and optimize your space. Get professional insights and recommendations tailored to your specific needs and budget.",
-      mainImage: "https://images.unsplash.com/photo-1600566753376-12c8ab7fb75b?w=600&h=400&fit=crop",
+      title: "Concierge & Guest Services",
+      icon: <MapPin className="w-6 h-6" />,
+      description: "Deliver exceptional guest experiences with personalized concierge support, travel arrangements, and local recommendations.",
+      mainImage: "https://images.unsplash.com/photo-1564501049412-61c2a3083791?w=600&h=400&fit=crop&q=80",
       features: [
-        "Space assessment and optimization strategies",
-        "Design concept development and refinement",
-        "Material and finish recommendations",
-        "Budget planning and phased implementation"
+        "Local tour and activity booking",
+        "Transportation and airport shuttle coordination",
+        "Restaurant reservations and special requests",
+        "Multilingual guest support services"
       ],
       galleryImages: [
-        "https://images.unsplash.com/photo-1600566753376-12c8ab7fb75b?w=300&h=200&fit=crop",
-        "https://images.unsplash.com/photo-1600607687644-c7171b42498b?w=300&h=200&fit=crop",
-        "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?w=300&h=200&fit=crop",
-        "https://images.unsplash.com/photo-1600566752355-35792bedcfea?w=300&h-200&fit=crop"
+        "https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=300&h=200&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1578683010236-d716f9a3f461?w=300&h=200&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1590490360182-c33d57733427?w=300&h=200&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=300&h=200&fit=crop&q=80"
       ]
     }
   ];
@@ -111,7 +111,7 @@ const Ourservices = () => {
   }, []);
 
   useEffect(() => {
-    const handleWheel = (e : any) => {
+    const handleWheel = (e) => {
       if (!sectionRef.current) return;
 
       const rect = sectionRef.current.getBoundingClientRect();
@@ -166,22 +166,16 @@ const Ourservices = () => {
 
     return () => {
       window.removeEventListener('wheel', handleWheel);
-      clearTimeout(scrollTimeoutRef.current );
+      if (scrollTimeoutRef.current) {
+        clearTimeout(scrollTimeoutRef.current);
+      }
     };
   }, [services.length, activeService]);
 
   const currentService = services[activeService];
 
-  const handleServiceClick = (index : any) => {
+  const handleServiceClick = (index) => {
     setActiveService(index);
-  };
-
-  const handlePrevious = () => {
-    setActiveService((prev) => (prev - 1 + services.length) % services.length);
-  };
-
-  const handleNext = () => {
-    setActiveService((prev) => (prev + 1) % services.length);
   };
 
   return (
@@ -204,7 +198,7 @@ const Ourservices = () => {
             }`}
           >
             {/* Left Content - Main Image */}
-            <div className="order-2 lg:order-1" data-aos="fade-right" data-aos-duration="1000" data-aos-delay="200">
+            <div className="order-2 lg:order-1">
               <div className="relative bg-white rounded-2xl shadow-xl overflow-hidden group">
                 <img 
                   src={currentService.mainImage}
@@ -217,7 +211,7 @@ const Ourservices = () => {
 
             {/* Right Content - Service Details */}
             <div className="order-1 lg:order-2 space-y-6">
-              <div className="flex items-center gap-4" data-aos="fade-left" data-aos-duration="800" data-aos-delay="100">
+              <div className="flex items-center gap-4">
                 <div className="w-12 h-12 bg-teal-100 rounded-full flex items-center justify-center text-teal-600 flex-shrink-0">
                   {currentService.icon}
                 </div>
@@ -226,7 +220,7 @@ const Ourservices = () => {
                 </h3>
               </div>
               
-              <p className="text-gray-700 leading-relaxed text-lg animate-fadeIn" data-aos="fade-up" data-aos-duration="900" data-aos-delay="300">
+              <p className="text-gray-700 leading-relaxed text-lg animate-fadeIn">
                 {currentService.description}
               </p>
             </div>
@@ -236,8 +230,8 @@ const Ourservices = () => {
           <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-start">
             
             {/* Left Side - Features List */}
-            <div className="space-y-4" data-aos="fade-right" data-aos-duration="800" data-aos-delay="400">
-              <h4 className="text-lg md:text-xl font-bold text-gray-800" data-aos="slide-down" data-aos-duration="600" data-aos-delay="500">
+            <div className="space-y-4">
+              <h4 className="text-lg md:text-xl font-bold text-gray-800">
                 What We Offer
               </h4>
 
@@ -246,9 +240,6 @@ const Ourservices = () => {
                   <div 
                     key={`${currentService.id}-feature-${index}`}
                     className="flex items-start gap-4 p-4 bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-300 transform hover:-translate-y-1"
-                    data-aos="zoom-in-right"
-                    data-aos-duration="700"
-                    data-aos-delay={600 + (index * 150)}
                     style={{ animationDelay: `${index * 10}ms` }}
                   >
                     <div className="flex-shrink-0 w-6 h-6 bg-gradient-to-r from-teal-400 to-teal-600 rounded-full flex items-center justify-center">
@@ -263,8 +254,8 @@ const Ourservices = () => {
             </div>
 
             {/* Right Side - Image Gallery */}
-            <div data-aos="fade-left" data-aos-duration="800" data-aos-delay="500">
-              <h4 className="text-lg md:text-xl font-bold text-gray-800 mb-4" data-aos="slide-down" data-aos-duration="600" data-aos-delay="600">
+            <div>
+              <h4 className="text-lg md:text-xl font-bold text-gray-800 mb-4">
                 Gallery
               </h4>
               <div className="grid grid-cols-2 gap-3">
@@ -272,9 +263,6 @@ const Ourservices = () => {
                   <div 
                     key={`${currentService.id}-gallery-${index}`}
                     className="bg-white rounded-xl shadow-lg overflow-hidden group"
-                    data-aos="flip-left"
-                    data-aos-duration="800"
-                    data-aos-delay={700 + (index * 100)}
                     style={{ animationDelay: `${index * 80}ms` }}
                   >
                     <img 
@@ -293,7 +281,7 @@ const Ourservices = () => {
 
       {/* Side Navigation - Only show when in services section */}
       {showSideNav && (
-        <div className="fixed right-6 top-1/2 transform -translate-y-1/2 z-10" data-aos="fade-left" data-aos-duration="1000" data-aos-delay="1200">
+        <div className="fixed right-6 top-1/2 transform -translate-y-1/2 z-10">
           <div className="flex flex-col space-y-3">
             {services.map((service, index) => (
               <button
@@ -305,9 +293,6 @@ const Ourservices = () => {
                     : 'bg-white text-teal-500 shadow-md hover:bg-teal-50'
                 }`}
                 title={service.title}
-                data-aos="zoom-in"
-                data-aos-duration="600"
-                data-aos-delay={1300 + (index * 100)}
               >
                 {service.icon}
               </button>
