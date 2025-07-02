@@ -111,7 +111,7 @@ const Ourservices = () => {
   }, []);
 
   useEffect(() => {
-    const handleWheel = (e) => {
+    const handleWheel = (e : any) => {
       if (!sectionRef.current) return;
 
       const rect = sectionRef.current.getBoundingClientRect();
@@ -166,13 +166,13 @@ const Ourservices = () => {
 
     return () => {
       window.removeEventListener('wheel', handleWheel);
-      clearTimeout(scrollTimeoutRef.current);
+      clearTimeout(scrollTimeoutRef.current );
     };
   }, [services.length, activeService]);
 
   const currentService = services[activeService];
 
-  const handleServiceClick = (index) => {
+  const handleServiceClick = (index : any) => {
     setActiveService(index);
   };
 
