@@ -2,7 +2,11 @@ import React from 'react';
 
 const Herosection = () => {
   return (
-    <section className="py-6 sm:py-10 lg:py-16 px-2 sm:px-8 bg-white">
+    <section 
+      id="home" 
+      data-section="home" 
+      className="py-6 sm:py-10 lg:py-16 px-2 sm:px-8 bg-white min-h-screen pt-20"
+    >
       <div className="max-w-7xl mx-auto w-full">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-start">
           {/* Left Content */}

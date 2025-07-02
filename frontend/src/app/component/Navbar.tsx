@@ -1,104 +1,101 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Home, Menu, X } from 'lucide-react';
+import { 
+  createNavItems, 
+  authButtons, 
+  brandInfo, 
+  scrollPositions,
+  type NavItem,
+  type SectionName 
+} from '../constent/Navitem';
 
-interface NavItem {
-  id: number;
-  name: string;
-  href: string;
-  sectionName: string;
-  active: boolean;
-}
-
-interface NavbarProps {
-  activeSection?: string;
-  onNavigate?: (sectionName: string) => void;
-}
-
-const Navbar: React.FC<NavbarProps> = ({ activeSection = "home", onNavigate }) => {
+const Navbar: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
+  const [activeSection, setActiveSection] = useState<SectionName>("home");
 
-  // Updated nav items with section mapping
-  const navItems: NavItem[] = [
-    {
-      id: 1,
-      name: "Home",
-      href: "#home",
-      sectionName: "home",
-      active: activeSection === "home"
-    },
-    {
-      id: 2,
-      name: "Places",
-      href: "#places", 
-      sectionName: "places",
-      active: activeSection === "places"
-    },
-    {
-      id: 3,
-      name: "Services",
-      href: "#services",
-      sectionName: "services", 
-      active: activeSection === "services"
-    },
-    {
-      id: 4,
-      name: "Dining",
-      href: "#dining",
-      sectionName: "dining",
-      active: activeSection === "dining"
-    },
-    {
-      id: 5,
-      name: "Events",
-      href: "#events",
-      sectionName: "events",
-      active: activeSection === "events"
-    },
-    {
-      id: 6,
-      name: "Contact",
-      href: "#contact",
-      sectionName: "contact",
-      active: activeSection === "contact"
-    }
-  ];
+  // Get navigation items with current active section
+  const navItems: NavItem[] = createNavItems(activeSection);
 
-  const authButtons = {
-    login: {
-      text: "Login",
-      type: "secondary"
-    },
-    signup: {
-      text: "Sign Up", 
-      type: "primary"
+  // Handle navigation clicks
+  const handleNavClick = (sectionName: string): void => {
+    // Try to find elements with data attributes first
+    let element: Element | null = null;
+    
+    // Check for data-section attribute first
+    element = document.querySelector(`[data-section="${sectionName}"]`);
+    
+    // If not found and it's services, check for data-services-container
+    if (!element && sectionName === 'services') {
+      element = document.querySelector(`[data-services-container]`);
     }
+    
+    // If still not found, try by ID
+    if (!element) {
+      element = document.getElementById(sectionName);
+    }
+
+    if (element) {
+      element.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start'
+      });
+    } else {
+      // Fallback to calculated positions
+      const scrollTo = scrollPositions[sectionName] || 0;
+      window.scrollTo({
+        top: scrollTo,
+        behavior: 'smooth'
+      });
+    }
+
+    setActiveSection(sectionName as SectionName);
+    setIsMenuOpen(false);
   };
 
-  const brandInfo = {
-    name: "LuxeStay",
-    tagline: "Premium Hotels"
-  };
+  // Track scroll position to update active section
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollPosition = window.scrollY;
+      const windowHeight = window.innerHeight;
+
+      // Determine active section based on scroll position
+      if (scrollPosition < windowHeight * 0.5) {
+        setActiveSection("home");
+      } else if (scrollPosition < windowHeight * 1.5) {
+        setActiveSection("places");
+      } else if (scrollPosition < windowHeight * 2.5) {
+        setActiveSection("services");
+      } else if (scrollPosition < windowHeight * 3.5) {
+        setActiveSection("dining");
+      } else if (scrollPosition < windowHeight * 4.5) {
+        setActiveSection("events");
+      } else {
+        setActiveSection("contact");
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    handleScroll(); // Check initial position
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
 
   const toggleMenu = (): void => {
     setIsMenuOpen(!isMenuOpen);
   };
 
-  const handleNavClick = (item: NavItem): void => {
-    if (onNavigate) {
-      onNavigate(item.sectionName);
-    }
-    setIsMenuOpen(false); // Close mobile menu after navigation
-  };
-
   const handleAuthClick = (authType: 'login' | 'signup'): void => {
     console.log(`${authType} clicked`);
+    // Add your authentication logic here
   };
 
   return (
-    <nav className="bg-white border-gray-100 sticky top-0 z-50 py-3 w-full shadow-sm ">
-      <div className="max-w-7xl mx-auto">
+    <nav className="bg-white border-gray-100 fixed top-0 z-50 py-3 w-full shadow-sm">
+      <div className="max-w-7xl mx-auto px-4">
         <div className="flex justify-between items-center h-12">
           {/* Hotel Logo */}
           <div className="flex items-center space-x-3">
@@ -117,7 +114,7 @@ const Navbar: React.FC<NavbarProps> = ({ activeSection = "home", onNavigate }) =
               {navItems.map((item: NavItem) => (
                 <button
                   key={item.id}
-                  onClick={() => handleNavClick(item)}
+                  onClick={() => handleNavClick(item.sectionName)}
                   className={`${
                     item.active
                       ? "text-teal-600 bg-teal-50 hover:bg-teal-100"
@@ -177,7 +174,7 @@ const Navbar: React.FC<NavbarProps> = ({ activeSection = "home", onNavigate }) =
             {navItems.map((item: NavItem) => (
               <button
                 key={item.id}
-                onClick={() => handleNavClick(item)}
+                onClick={() => handleNavClick(item.sectionName)}
                 className={`${
                   item.active
                     ? "text-teal-600 bg-teal-50"

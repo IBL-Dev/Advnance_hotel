@@ -71,7 +71,7 @@ const Ourservices = () => {
     },
     {
       id: 3,
-      title: "Consultation Services",
+      title: "Consultation Services",  
       icon: <Zap className="w-6 h-6" />,
       description: "Expert consultation to guide your design decisions and optimize your space. Get professional insights and recommendations tailored to your specific needs and budget.",
       mainImage: "https://images.unsplash.com/photo-1600566753376-12c8ab7fb75b?w=600&h=400&fit=crop",
@@ -85,7 +85,7 @@ const Ourservices = () => {
         "https://images.unsplash.com/photo-1600566753376-12c8ab7fb75b?w=300&h=200&fit=crop",
         "https://images.unsplash.com/photo-1600607687644-c7171b42498b?w=300&h=200&fit=crop",
         "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?w=300&h=200&fit=crop",
-        "https://images.unsplash.com/photo-1600566752355-35792bedcfea?w=300&h=200&fit=crop"
+        "https://images.unsplash.com/photo-1600566752355-35792bedcfea?w=300&h-200&fit=crop"
       ]
     }
   ];
@@ -187,6 +187,8 @@ const Ourservices = () => {
   return (
     <section 
       ref={sectionRef}
+      id="services"
+      data-section="services"
       data-services-container
       className="h-screen overflow-hidden bg-gradient-to-br from-gray-50 to-gray-100 flex flex-col"
     >

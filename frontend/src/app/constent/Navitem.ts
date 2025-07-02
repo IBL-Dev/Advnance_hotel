@@ -62,7 +62,7 @@ export const createNavItems = (activeSection: string): NavItem[] => [
   },
   {
     id: 6,
-    name: "Contact",
+    name: "contact",
     href: "#contact",
     sectionName: "contact",
     active: activeSection === "contact"
@@ -86,5 +86,15 @@ export const brandInfo: BrandInfo = {
   logo: "Home" // This refers to the Lucide icon name
 };
 
-export const availableSections = ["home", "places", "services"] as const;
+export const availableSections = ["home", "places", "services", "dining", "events", "contact"] as const;
 export type SectionName = typeof availableSections[number];
+
+// Navigation scroll positions
+export const scrollPositions: { [key: string]: number } = {
+  home: 0,
+  places: typeof window !== 'undefined' ? window.innerHeight : 800,
+  services: typeof window !== 'undefined' ? window.innerHeight * 2 : 1600,
+  dining: typeof window !== 'undefined' ? window.innerHeight * 3 : 2400,
+  events: typeof window !== 'undefined' ? window.innerHeight * 4 : 3200,
+  contact: typeof window !== 'undefined' ? window.innerHeight * 5 : 4000
+};
