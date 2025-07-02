@@ -190,28 +190,28 @@ const Ourservices = () => {
         {/* Main Content - Properly centered with consistent spacing */}
         <div className="flex-1 flex flex-col justify-center space-y-8">
           
-          {/* Top Section - Service Header and Main Image */}
+          {/* Top Section - Service Header and Main Image on Same Line */}
           <div 
             key={currentService.id}
-            className={`grid lg:grid-cols-2 gap-8 lg:gap-12 items-center transition-all duration-700 transform ${
+            className={`flex items-center gap-24  transition-all duration-700 transform ${
               isScrolling ? 'scale-95 opacity-80' : 'scale-100 opacity-100'
             }`}
           >
-            {/* Left Content - Main Image */}
-            <div className="order-2 lg:order-1">
+            {/* Left Side - Main Image */}
+            <div className="flex-1">
               <div className="relative bg-white rounded-2xl shadow-xl overflow-hidden group">
                 <img 
                   src={currentService.mainImage}
                   alt={currentService.title}
-                  className="w-full h-64 md:h-80 object-cover transition-all duration-700 transform group-hover:scale-105"
+                  className="w-full h-28 md:h-64 object-cover transition-all duration-700 transform group-hover:scale-100"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
               </div>
             </div>
 
-            {/* Right Content - Service Details */}
-            <div className="order-1 lg:order-2 space-y-6">
-              <div className="flex items-center gap-4">
+            {/* Right Side - Service Header */}
+            <div className="flex-1">
+              <div className="flex items-center gap-2">
                 <div className="w-12 h-12 bg-teal-100 rounded-full flex items-center justify-center text-teal-600 flex-shrink-0">
                   {currentService.icon}
                 </div>
@@ -220,17 +220,17 @@ const Ourservices = () => {
                 </h3>
               </div>
               
-              <p className="text-gray-700 leading-relaxed text-lg animate-fadeIn">
+              <p className="text-gray-700 leading-relaxed text-lg animate-fadeIn mt-4">
                 {currentService.description}
               </p>
             </div>
           </div>
           
           {/* Bottom Section - Features and Gallery properly aligned */}
-          <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-start">
+          <div className="grid lg:grid-cols-2 gap-4 lg:gap-6 items-start">
             
             {/* Left Side - Features List */}
-            <div className="space-y-4">
+            <div className="space-y-2">
               <h4 className="text-lg md:text-xl font-bold text-gray-800">
                 What We Offer
               </h4>
@@ -255,10 +255,10 @@ const Ourservices = () => {
 
             {/* Right Side - Image Gallery */}
             <div>
-              <h4 className="text-lg md:text-xl font-bold text-gray-800 mb-4">
+              <h4 className="text-lg md:text-xl font-bold text-gray-800 mb-2">
                 Gallery
               </h4>
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-2 gap-2 ">
                 {currentService.galleryImages.map((image, index) => (
                   <div 
                     key={`${currentService.id}-gallery-${index}`}

@@ -64,7 +64,7 @@ export class UserController {
   async getUser(@Param('userId') userId: string) {
     this.logger.debug(`Fetching user by ID: ${userId}`);
     return this.userService.show(userId);
-  }
+  }                                         
 
   @Delete('/:userId')
   async deleteUser(@Param('userId') userId: string) {
