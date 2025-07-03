@@ -1,5 +1,5 @@
 export class CreateHotelInfoDto {
-  hotelId: string;
+ 
   name: string;
   description?: string;
   phone?: string;

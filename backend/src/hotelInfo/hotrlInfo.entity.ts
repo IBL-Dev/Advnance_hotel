@@ -4,8 +4,7 @@ import { Document } from 'mongoose';
 @Schema({ timestamps: true }) // adds createdAt and updatedAt
 export class HotelInfo extends Document {
 
-  @Prop({ required: true, unique: true })
-  hotelId: string;
+ 
 
   @Prop({ required: true })
   name: string;
