@@ -9,20 +9,16 @@ export class JoiValidationPipe implements PipeTransform {
   constructor(private schema: ObjectSchema) {}
 
   transform(value: any) {
-    const { error } = this.schema.validate(value, { abortEarly: false });
-    
+    const { error, value: validatedValue } = this.schema.validate(value); // ✅ Use schema's internal options
+
     if (error) {
       const messages = error.details.map((detail) => detail.message).join(', ');
-      
-      // Log the validation error
       this.logger.warn(`Validation failed: ${messages}`);
       this.logger.debug(`Invalid payload: ${JSON.stringify(value)}`);
-
       throw new BadRequestException(messages);
     }
 
-    // Optionally log the success
-    this.logger.debug(`Validation passed: ${JSON.stringify(value)}`);
-    return value;
+    this.logger.debug(`Validation passed: ${JSON.stringify(validatedValue)}`);
+    return validatedValue;
   }
 }

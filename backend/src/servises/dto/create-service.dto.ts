@@ -1,4 +1,5 @@
+// services/dto/create-service.dto.ts
 export class CreateServiceDto {
-  readonly serviceId: string;
+  readonly name: string;
   readonly description: string;
 }
