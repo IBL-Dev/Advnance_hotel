@@ -14,37 +14,43 @@ import { UpdateRoomDto } from './dto/update-room.dto';
 import { AuthGuard } from '@nestjs/passport';
 import { RolesGuard } from '../common/roles.guard';
 import { Roles } from '../common/roles.decorator';
+import { JoiValidationPipe } from '../common/validation.pipe';
+import { CreateRoomSchema, UpdateRoomSchema } from './room.validation';
 
 @UseGuards(AuthGuard('jwt'), RolesGuard)
 @Controller('room')
 export class RoomController {
   constructor(private readonly roomService: RoomService) {}
 
-  @Post()
+  @Post('/create')
   @Roles('admin')
-  create(@Body() createRoomDto: CreateRoomDto) {
+  create(
+    @Body(new JoiValidationPipe(CreateRoomSchema)) createRoomDto: CreateRoomDto,
+  ) {
     return this.roomService.create(createRoomDto);
   }
 
-  //add validation
-  @Patch(':id')
+  @Patch('/update/:id')
   @Roles('admin')
-  update(@Param('id') id: string, @Body() updateRoomDto: UpdateRoomDto) {
+  update(
+    @Param('id') id: string,
+    @Body(new JoiValidationPipe(UpdateRoomSchema)) updateRoomDto: UpdateRoomDto,
+  ) {
     return this.roomService.update(id, updateRoomDto);
   }
 
-  @Delete(':id')
+  @Delete('/remove/:id')
   @Roles('admin')
   delete(@Param('id') id: string) {
     return this.roomService.delete(id);
   }
 
-  @Get()
+  @Get('/getall')
   findAll() {
     return this.roomService.findAll();
   }
 
-  @Get(':id')
+  @Get('/getroom/:id')
   findOne(@Param('id') id: string) {
     return this.roomService.findOne(id);
   }
