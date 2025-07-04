@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import { Home, Menu, X } from 'lucide-react';
 import { 
   createNavItems, 
@@ -12,6 +13,7 @@ import {
 } from '../constent/Navitem';
 
 const Navbar: React.FC = () => {
+  const router = useRouter();
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
   const [activeSection, setActiveSection] = useState<SectionName>("home");
 
@@ -88,9 +90,14 @@ const Navbar: React.FC = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
+  // Updated auth click handler with navigation
   const handleAuthClick = (authType: 'login' | 'signup'): void => {
-    console.log(`${authType} clicked`);
-    // Add your authentication logic here
+    if (authType === 'login') {
+      router.push('/pages/Login');
+    } else if (authType === 'signup') {
+      router.push('/pages/Signup');
+    }
+    setIsMenuOpen(false); // Close mobile menu if open
   };
 
   return (
