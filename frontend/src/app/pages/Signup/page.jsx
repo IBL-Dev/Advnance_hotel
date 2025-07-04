@@ -1,13 +1,16 @@
 "use client";
 
 import React, { useState } from 'react';
-import { Eye, EyeOff, Hotel, ArrowRight, Mail, Lock, User, CheckCircle } from 'lucide-react';
+import { Eye, EyeOff, Hotel, ArrowRight, Mail, Lock, User, CheckCircle, AlertCircle } from 'lucide-react';
 import { useRouter } from 'next/navigation';
+import { signup } from "../../api/auth";
 
 const SignupPage = () => {
   const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [toast, setToast] = useState({ show: false, message: '', type: 'success' });
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -22,11 +25,65 @@ const SignupPage = () => {
     });
   };
 
+  const showToast = (message, type = 'success') => {
+    setToast({ show: true, message, type });
+    setTimeout(() => {
+      setToast({ show: false, message: '', type: 'success' });
+    }, 5000);
+  };
+
   const handleSubmit = async () => {
-    console.log('Signup submitted:', formData);
-    // Add your signup logic here
-    // After successful signup, redirect to login or dashboard
-    // router.push('/Login');
+    // Validation
+    if (!formData.name || !formData.email || !formData.password || !formData.confirmPassword) {
+      showToast('Please fill in all fields', 'error');
+      return;
+    }
+
+    if (formData.password !== formData.confirmPassword) {
+      showToast('Passwords do not match', 'error');
+      return;
+    }
+
+    if (formData.password.length < 6) {
+      showToast('Password must be at least 6 characters long', 'error');
+      return;
+    }
+
+    setIsLoading(true);
+
+    try {
+      const signupData = {
+        name: formData.name,
+        email: formData.email,
+        password: formData.password
+      };
+
+      const response = await signup(signupData);
+      
+      // Success handling
+      showToast('Account created successfully! Redirecting to home page...', 'success');
+      
+      // Clear form
+      setFormData({
+        name: '',
+        email: '',
+        password: '',
+        confirmPassword: ''
+      });
+
+      // Navigate to home page after a short delay
+      setTimeout(() => {
+        router.push('/');
+      }, 2000);
+
+    } catch (error) {
+      // Error handling
+      const errorMessage = error.message || 'Signup failed. Please try again.';
+      showToast(errorMessage, 'error');
+      console.error('Signup error:', error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const goToLogin = () => {
@@ -41,6 +98,22 @@ const SignupPage = () => {
 
   return (
     <div className="h-screen w-full bg-[#EDF6F9] flex overflow-hidden">
+      {/* Toast Notification */}
+      {toast.show && (
+        <div className={`fixed top-4 right-4 z-50 flex items-center p-4 rounded-lg shadow-lg transition-all duration-300 ${
+          toast.type === 'success' 
+            ? 'bg-green-500 text-white' 
+            : 'bg-red-500 text-white'
+        }`}>
+          {toast.type === 'success' ? (
+            <CheckCircle className="h-5 w-5 mr-2" />
+          ) : (
+            <AlertCircle className="h-5 w-5 mr-2" />
+          )}
+          <span className="font-medium">{toast.message}</span>
+        </div>
+      )}
+
       {/* Left Side - Image/Illustration */}
       <div className="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-[#E29578] via-[#83C5BE] to-[#006D77] relative overflow-hidden">
         {/* Background Pattern */}
@@ -164,6 +237,7 @@ const SignupPage = () => {
                   className="w-full px-4 py-2.5 pl-10 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#006D77] focus:border-[#006D77] transition-colors duration-200"
                   placeholder="Enter your full name"
                   required
+                  disabled={isLoading}
                 />
                 <User className="absolute left-3 top-2.5 h-5 w-5 text-gray-400" />
               </div>
@@ -183,6 +257,7 @@ const SignupPage = () => {
                   className="w-full px-4 py-2.5 pl-10 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#006D77] focus:border-[#006D77] transition-colors duration-200"
                   placeholder="Enter your email"
                   required
+                  disabled={isLoading}
                 />
                 <Mail className="absolute left-3 top-2.5 h-5 w-5 text-gray-400" />
               </div>
@@ -202,12 +277,14 @@ const SignupPage = () => {
                   className="w-full px-4 py-2.5 pl-10 pr-10 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#006D77] focus:border-[#006D77] transition-colors duration-200"
                   placeholder="Create a password"
                   required
+                  disabled={isLoading}
                 />
                 <Lock className="absolute left-3 top-2.5 h-5 w-5 text-gray-400" />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
                   className="absolute right-3 top-2.5 text-gray-400 hover:text-gray-600 transition-colors duration-200"
+                  disabled={isLoading}
                 >
                   {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
                 </button>
@@ -232,12 +309,14 @@ const SignupPage = () => {
                   }`}
                   placeholder="Confirm your password"
                   required
+                  disabled={isLoading}
                 />
                 <Lock className="absolute left-3 top-2.5 h-5 w-5 text-gray-400" />
                 <button
                   type="button"
                   onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                   className="absolute right-3 top-2.5 text-gray-400 hover:text-gray-600 transition-colors duration-200"
+                  disabled={isLoading}
                 >
                   {showConfirmPassword ? <EyeOff size={18} /> : <Eye size={18} />}
                 </button>
@@ -259,6 +338,7 @@ const SignupPage = () => {
                 id="terms"
                 className="h-4 w-4 text-[#006D77] focus:ring-[#006D77] border-gray-300 rounded mt-0.5"
                 required
+                disabled={isLoading}
               />
               <label htmlFor="terms" className="ml-2 block text-xs text-gray-700">
                 I agree to the{' '}
@@ -275,10 +355,20 @@ const SignupPage = () => {
             <button
               type="button"
               onClick={handleSubmit}
-              className="w-full bg-[#006D77] text-white py-2.5 px-4 rounded-lg font-medium hover:bg-opacity-90 transition-all duration-200 flex items-center justify-center group"
+              disabled={isLoading}
+              className="w-full bg-[#006D77] text-white py-2.5 px-4 rounded-lg font-medium hover:bg-opacity-90 transition-all duration-200 flex items-center justify-center group disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              Create Account
-              <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform duration-200" />
+              {isLoading ? (
+                <>
+                  <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+                  Creating Account...
+                </>
+              ) : (
+                <>
+                  Create Account
+                  <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform duration-200" />
+                </>
+              )}
             </button>
           </div>
 
@@ -295,10 +385,16 @@ const SignupPage = () => {
 
             {/* Social Signup */}
             <div className="mt-4 grid grid-cols-2 gap-3">
-              <button className="w-full inline-flex justify-center py-2.5 px-4 border border-gray-300 rounded-lg shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 transition-colors duration-200">
+              <button 
+                className="w-full inline-flex justify-center py-2.5 px-4 border border-gray-300 rounded-lg shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 transition-colors duration-200 disabled:opacity-50"
+                disabled={isLoading}
+              >
                 <span className="ml-2">Google</span>
               </button>
-              <button className="w-full inline-flex justify-center py-2.5 px-4 border border-gray-300 rounded-lg shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 transition-colors duration-200">
+              <button 
+                className="w-full inline-flex justify-center py-2.5 px-4 border border-gray-300 rounded-lg shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 transition-colors duration-200 disabled:opacity-50"
+                disabled={isLoading}
+              >
                 <span className="ml-2">Twitter</span>
               </button>
             </div>
@@ -309,7 +405,8 @@ const SignupPage = () => {
             Already have an account?{' '}
             <button
               onClick={goToLogin}
-              className="text-[#006D77] hover:text-[#83C5BE] font-medium transition-colors duration-200"
+              className="text-[#006D77] hover:text-[#83C5BE] font-medium transition-colors duration-200 disabled:opacity-50"
+              disabled={isLoading}
             >
               Sign in here
             </button>
