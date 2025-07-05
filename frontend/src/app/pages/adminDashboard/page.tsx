@@ -1,9 +1,10 @@
 import React from 'react'
+import Sidebar from '@/app/component/admin/sidebar'
 
 const AdminDashBoard = () => {
   return (
     <div>
-      <h1>wel come ro admin dash board</h1>
+     <Sidebar/>
     </div>
   )
 }

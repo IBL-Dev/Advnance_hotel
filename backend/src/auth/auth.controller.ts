@@ -1,6 +1,17 @@
-import { Body, Controller, Post, UseGuards, Request, Logger } from '@nestjs/common';
+// auth.controller.ts
+import { 
+  Controller, 
+  Post, 
+  Body, 
+  UnauthorizedException,
+  Logger 
+} from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { AuthGuard } from '@nestjs/passport';
+
+export class LoginDto {
+  email: string;
+  password: string;
+}
 
 @Controller('auth')
 export class AuthController {
@@ -8,10 +19,20 @@ export class AuthController {
 
   constructor(private authService: AuthService) {}
 
-  @UseGuards(AuthGuard('local'))
-  @Post('/login')
-  async login(@Request() req: any) {
-    this.logger.log(`Login request received for: ${req.user.email}`);
-    return this.authService.login(req.user);
+  @Post('login')
+  async login(@Body() loginDto: LoginDto) {
+    // Validate user credentials
+    const user = await this.authService.validateUser(
+      loginDto.email, 
+      loginDto.password
+    );
+
+    // If user is null, credentials are invalid
+    if (!user) {
+      throw new UnauthorizedException('Invalid email or password');
+    }
+
+    // If validation successful, generate and return token
+    return this.authService.login(user);
   }
 }
