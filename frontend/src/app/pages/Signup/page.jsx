@@ -87,7 +87,7 @@ const SignupPage = () => {
   };
 
   const goToLogin = () => {
-    router.push('/Login');
+    router.push('/pages/Login');
   };
 
   const goToHome = () => {
